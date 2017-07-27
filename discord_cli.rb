@@ -1,5 +1,8 @@
 require 'curses'
-require 'yaml'
+
+require_relative 'config'
+
+require_relative 'discord'
 
 require_relative 'mainwindow'
 require_relative 'headerwindow'
@@ -28,7 +31,7 @@ class MainScreen
   end
 
   def add_message(msg)
-    @main_window.send :add_message, msg
+    @main_window.add_message msg
   end
 
   def build_display
@@ -40,6 +43,13 @@ class MainScreen
   end
 end
 
-screen = MainScreen.new
-screen.build_display
-sleep 5
+CONFIG = Config.new('config.yaml')
+
+@screen = MainScreen.new
+discord = DiscordManager.new(@screen)
+t1 = Thread.new { discord.run }
+t2 = Thread.new { @screen.build_display }
+t1.join
+t2.join
+# screen.build_display
+# sleep 5

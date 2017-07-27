@@ -26,6 +26,11 @@ class MainWindow
   end
 
   def add_message(msg)
+    @window.setpos MainScreen::MAIN_WINDOW_HEIGHT - 1, 0
+    @window.deleteln
+    @window.scroll
+    @window << msg
+    @window.scroll
   end
 
   def take_input
@@ -33,6 +38,7 @@ class MainWindow
       input = @window.getstr
       @window.refresh
       # TODO: Post message
+      add_message('M E M E LMAO')
       draw_prompt
     end
   end
