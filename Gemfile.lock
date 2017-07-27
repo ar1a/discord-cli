@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    ncurses-ruby (1.2.4)
+    curses (1.2.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  ncurses-ruby
+  curses
 
 BUNDLED WITH
    1.15.3
