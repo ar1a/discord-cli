@@ -1,5 +1,8 @@
 require 'curses'
+require 'yaml'
+
 require_relative 'mainwindow'
+require_relative 'headerwindow'
 
 include Curses
 
@@ -13,21 +16,27 @@ class MainScreen
   MAIN_WINDOW_WIDTH = SCREEN_WIDTH
 
   def initialize
-    noecho
-    nonl
+    # noecho
+    # nonl
     stdscr.keypad true
     raw
     stdscr.nodelay = 1
     init_screen
     start_color
     init_pair(1, COLOR_CYAN, COLOR_BLACK)
-    init_pair(2, COLOR_WHITE, COLOR_CYAN)
+    init_pair(2, COLOR_BLACK, COLOR_CYAN)
+  end
+
+  def add_message(msg)
+    @main_window.send :add_message, msg
   end
 
   def build_display
     @main_window = MainWindow.new
-    @main_window << 'wew lad'
-    @main_window.refresh
+    @header_window = HeaderWindow.new
+    @header_window.build_display
+    @main_window.draw_prompt
+    @main_window.take_input
   end
 end
 
